@@ -1,0 +1,48 @@
+projection;
+strict (2);
+use draft;
+define behavior for ZMW_C_CLAIM alias Claim
+implementation in class ZMW_BP_C_CLAIM unique
+//use etag
+
+{
+//  field ( readonly ) Claim;
+
+  use create ( augment, precheck );
+  use update ( precheck );
+  use delete;
+
+  use action copyClaim;
+  use action closeClaim;
+  use action rejectClaim;
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Subclaim { create; with draft; }
+}
+
+define behavior for ZMW_C_SUBCLAIM alias Subclaim
+
+{
+  use update;
+  use delete;
+
+  use association _Claim { with draft; }
+  use association _Pay { create; with draft; }
+
+}
+
+define behavior for ZMW_C_PAY alias Pay
+//use etag
+{
+
+  use update;
+  use delete;
+
+//  use delete; // workaround for missing determination on delete
+  use association _Claim  { with draft; }
+  use association _Subclaim  { with draft; }
+}

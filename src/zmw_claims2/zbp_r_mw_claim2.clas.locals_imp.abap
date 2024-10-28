@@ -1,0 +1,24 @@
+CLASS LHC_ZR_MW_CLAIM2 DEFINITION INHERITING FROM CL_ABAP_BEHAVIOR_HANDLER.
+  PRIVATE SECTION.
+    METHODS:
+      GET_GLOBAL_AUTHORIZATIONS FOR GLOBAL AUTHORIZATION
+        IMPORTING
+           REQUEST requested_authorizations FOR Claim2
+        RESULT result,
+      get_instance_features FOR INSTANCE FEATURES
+            IMPORTING keys REQUEST requested_features FOR Claim2 RESULT result.
+
+          METHODS earlynumbering_cba_Subclaim2 FOR NUMBERING
+            IMPORTING entities FOR CREATE Claim2\_Subclaim2.
+ENDCLASS.
+
+CLASS LHC_ZR_MW_CLAIM2 IMPLEMENTATION.
+  METHOD GET_GLOBAL_AUTHORIZATIONS.
+  ENDMETHOD.
+  METHOD get_instance_features.
+  ENDMETHOD.
+
+  METHOD earlynumbering_cba_Subclaim2.
+  ENDMETHOD.
+
+ENDCLASS.

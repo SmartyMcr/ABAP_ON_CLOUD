@@ -1,0 +1,8 @@
+@EndUserText.label: 'OData  v2 CLAIM2'
+define service ZUI_MW_CLAIM002_O2 {
+  expose ZC_MW_CLAIM2    as Claim2;
+  expose ZMW_C_SUBCLAIM2 as Subclaim2;
+  expose ZMW_C_PAY2      as Pay2;
+  expose ZMW_I_Status    as Status;
+  expose ZMW_I_Paystat   as PayStatus;
+}

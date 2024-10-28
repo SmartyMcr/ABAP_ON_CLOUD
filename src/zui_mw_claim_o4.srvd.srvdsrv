@@ -1,0 +1,9 @@
+@EndUserText: {label: 'Service Definition for ZMW_C_CLAIM'}
+@ObjectModel: {leadingEntity: {name: 'ZMW_C_CLAIM'}}
+define service ZUI_MW_CLAIM_O4 {
+  expose ZMW_C_CLAIM    as Claim;
+  expose ZMW_C_SUBCLAIM as Subclaim;
+  expose ZMW_C_PAY      as Pay;
+  expose ZMW_I_Status   as Status;
+  expose ZMW_I_Paystat  as PayStatus;
+}

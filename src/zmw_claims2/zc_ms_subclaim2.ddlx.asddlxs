@@ -1,0 +1,95 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo:{
+    typeName: 'SubclaimXXX',
+    typeNamePlural: 'SubclaimsXXX',
+    title: { type: #STANDARD, 
+            value: 'Subclaim' }
+ }
+
+annotate view ZMW_C_SUBCLAIM2
+    with 
+{
+  @UI.facet: [ { 
+              id:            'Subclaim',
+                 purpose:       #STANDARD,
+                 type:          #IDENTIFICATION_REFERENCE,
+                 label:         'Subclaim',  //Shown on the TAB
+                 position:      10 } ]
+                 
+//{                
+//               id:            'Payment',
+//                 purpose:       #STANDARD,
+//                 type:          #LINEITEM_REFERENCE,
+//                 label:         'Payments',
+//                 position:      20,
+//                 targetElement: '_Pay2' }   
+                               
+//                 ]
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  @EndUserText.label: 'ClaimTEST'
+  Claim;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @EndUserText.label: 'Sub Claim'
+  Subclaim;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @EndUserText.label: 'SubClaim type'
+  Subcltype;
+  @UI.lineItem: [{ position: 40 , criticality: 'SubclaimStatusIndicator', importance: #HIGH }]
+  @UI.identification: [{ position: 40, criticality: 'SubclaimStatusIndicator' } ]
+  @UI.textArrangement: #TEXT_ONLY 
+  @EndUserText.label: 'Status'
+  Status;
+  @UI: {
+     dataPoint: { title: 'Days to End Claim',
+                  criticality: 'DaysToEnd',
+                  targetValue: #(DaysOpen),
+                  visualization: #PROGRESS  },
+    lineItem:       [{ type: #AS_DATAPOINT, position: 45, importance: #HIGH}],
+    identification: [{ type: #AS_DATAPOINT, position: 45 }]  }
+    RemainingDays;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  @EndUserText.label: 'Coverage'
+  Coverage;
+  @UI.lineItem: [{ position: 55 }]
+  @UI.identification: [{ position: 55 }]
+  @EndUserText.label: 'Total Paid'
+  TotalPaid;
+  @UI.lineItem: [{ position: 56 }]
+  @UI.identification: [{ position: 56 }]
+  @EndUserText.label: 'Currency'
+  CurrencyCode;  
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  @EndUserText.label: 'Open Date'
+  Opendate;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  @EndUserText.label: 'Complexity'
+  Complexity;
+  @UI.lineItem: [{ position: 80 }]
+  @UI.identification: [{ position: 80 }]
+  @EndUserText.label: 'Created By'
+  CreatedBy;
+  @UI.lineItem: [{ position: 90 }]
+  @UI.identification: [{ position: 90 }]
+  @EndUserText.label: 'Created At'
+  CreatedAt;
+  @UI.lineItem: [{ position: 100 }]
+  @UI.identification: [{ position: 100 }]
+  @EndUserText.label: 'Changed By'
+  LocalLastChangedBy;
+  @UI.lineItem: [{ position: 110 }]
+  @UI.identification: [{ position: 110 }]
+  @EndUserText.label: 'Changed At'
+  LocalLastChangedAt;
+  @UI.lineItem: [{ position: 120 }]
+  @UI.identification: [{ position: 120 }]
+  @EndUserText.label: 'Last Changed At'
+  LastChangedAt;
+    
+}

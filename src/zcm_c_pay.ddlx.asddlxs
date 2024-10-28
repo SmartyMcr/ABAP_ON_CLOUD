@@ -1,0 +1,71 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo:{
+    typeName: 'Payment',
+    typeNamePlural: 'Payments',
+    description: { value: 'Subclaim' },
+    title: {    type: #STANDARD,
+                value: 'Payment' }
+ }
+ 
+annotate view ZMW_C_PAY
+    with 
+{
+
+  @UI.facet: [ { id:            'Payments',
+                 purpose:       #STANDARD,
+                 type:          #IDENTIFICATION_REFERENCE,
+                 label:         'Payment',
+                 position:      10 }
+                 ]
+    
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]  
+  @EndUserText.label: 'Claim'  
+    Claim;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @EndUserText.label: 'SubClaim'    
+    Subclaim;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @EndUserText.label: 'Payment'    
+    Payment;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @EndUserText.label: 'Pay Amount'    
+    Pampaid;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  @EndUserText.label: 'Currency'    
+    CurrencyCode;
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  @EndUserText.label: 'Benefit Type'    
+    Bentype;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  @EndUserText.label: 'Pay Status'    
+    PayStat;
+  @UI.lineItem: [{ position: 80 }]
+  @UI.identification: [{ position: 80 }]
+  @EndUserText.label: 'Created By'    
+    CreatedBy;
+  @UI.lineItem: [{ position: 90 }]
+  @UI.identification: [{ position: 90 }]
+  @EndUserText.label: 'Created At'    
+    CreatedAt;
+  @UI.lineItem: [{ position: 100 }]
+  @UI.identification: [{ position: 100 }]
+  @EndUserText.label: 'Last Changed By'    
+    LocalLastChangedBy;
+  @UI.lineItem: [{ position: 110 }]
+  @UI.identification: [{ position: 110 }]
+  @EndUserText.label: 'Loc Last Changed At'    
+    LocalLastChangedAt;
+  @UI.lineItem: [{ position: 120 }]
+  @UI.identification: [{ position: 120 }]
+  @EndUserText.label: 'Last Changed At'
+    LastChangedAt;
+   
+}

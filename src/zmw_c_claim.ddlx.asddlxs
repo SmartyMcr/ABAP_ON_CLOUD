@@ -1,0 +1,318 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: { typeName: 'Claim',
+                typeNamePlural: 'Claims',
+                title: { type: #STANDARD, label: 'Claim',  value: 'Claim' },
+                description: { value: 'ClaimDesc' } }
+
+annotate view ZMW_C_CLAIM with
+{
+  @UI.facet: [ {
+            purpose: #HEADER,
+            type: #DATAPOINT_REFERENCE,
+            label: 'Policy',
+            position: 10,
+            targetQualifier: 'PolicyNo' },
+
+            {
+            purpose: #HEADER,
+            type: #DATAPOINT_REFERENCE,
+            label: 'Status',
+            position: 20,
+            targetQualifier: 'StatusTXT' },
+               {
+                purpose: #STANDARD,
+                type: #COLLECTION,
+                position: 10,
+                id: 'super',
+                label: 'Claim Details'
+                },
+                    {
+                        purpose: #STANDARD,
+                        type: #IDENTIFICATION_REFERENCE,
+                        label: 'Claims Info',
+                        position: 10,
+                        parentId: 'super'
+                    },
+                        {
+                            purpose: #STANDARD,
+                            type: #FIELDGROUP_REFERENCE,
+                            label: 'Products',
+                            position: 20,
+                            parentId: 'super',
+                            targetQualifier: 'products'
+                        },
+                        {
+                            purpose: #STANDARD,
+                            type: #FIELDGROUP_REFERENCE,
+                            label: 'Dates',
+                            position: 30,
+                            parentId: 'super',
+                            targetQualifier: 'dates'
+                  },
+                 {
+  //                  * Adds a table for Subclaims
+                    purpose: #STANDARD,
+                    type: #LINEITEM_REFERENCE,
+                    label: 'Subclaims',
+                    position: 20,
+                    targetElement: '_Subclaim'
+                }
+
+            ]
+
+  @EndUserText.label: 'Claim'
+  @UI.identification: [ { position: 10 },
+                        { type:  #FOR_ACTION, label: 'Copy', dataAction: 'copyClaim'} ]
+
+  @UI.lineItem: [ { position: 10 },
+                  { type:  #FOR_ACTION, label: 'Copy Claim', dataAction: 'copyClaim', inline: true} ]
+
+  // ADD inline:true   - if you want to see the button on the record itself
+  @UI.selectionField: [ {
+    position: 10
+  } ]
+
+  Claim;
+
+  //  @UI.identification: [ {
+  //    position: 20 ,
+  //    label: 'Policy Prod'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 20 ,
+  //    label: 'Policy Prod'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 20
+  //  } ]
+  @UI.fieldGroup: [{ qualifier: 'products', label: 'Product',  position: 10 }]
+  Polprod;
+
+  //  @UI.identification: [ {
+  //    position: 30 ,
+  //    label: 'Claim Type'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 30 ,
+  //    label: 'Claim Type'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 30
+  //  } ]
+
+  @UI.fieldGroup: [{ qualifier: 'products', label: 'Claim Type',  position: 20 }]
+  Clmtype;
+
+  @UI.fieldGroup: [{ qualifier: 'products', label: 'Booking Fee',  position: 30 }]
+  BookingFee;
+
+  @UI.fieldGroup: [{ qualifier: 'products', label: 'Total Price',  position: 40 }]
+  TotalPrice;
+
+  @UI.fieldGroup: [{ qualifier: 'products', label: 'Currency',  position: 50 }]
+  CurrencyCode;
+
+  @UI.selectionField: [{ position: 21 }]
+  @UI.identification: [ { position: 21 },
+//                        { type:  #FOR_ACTION, label: 'Reject', dataAction: 'rejectClaim'} ,
+                        { type:  #FOR_ACTION, label: 'Close', dataAction: 'closeClaim'} ] 
+
+  @UI.lineItem: [ { position: 21 },
+//                  { type:  #FOR_ACTION, label: 'Reject Claim', dataAction: 'rejectClaim', inline: true} ,
+                  { type:  #FOR_ACTION, label: 'Close Claim', dataAction: 'closeClaim', inline: true} ]
+//    @UI.lineItem: [{ position: 22 , criticality: 'Criticality',
+//                     importance: #HIGH },
+//    { type: #FOR_ACTION, label: 'Close',
+//    dataAction: 'closeClaim' },
+//    { type: #FOR_ACTION, label: 'Reject',
+//    dataAction: 'rejectClaim' }]
+//    @UI.identification: [
+//    { type: #FOR_ACTION, label: 'Close',
+//    dataAction: 'closeClaim' },
+//    { type: #FOR_ACTION, label: 'Reject',
+//    dataAction: 'rejectClaim' }]
+  Status;
+
+  @UI.identification: [ {
+      position: 41 ,
+      label: 'Overall Status'
+    } ]
+  @UI.lineItem: [ {
+    position: 41 ,
+    criticality: 'Criticality',
+    label: 'OverallStatus'
+  } ]
+  @UI.selectionField: [ {
+    position: 41
+  } ]
+  @UI.dataPoint: { qualifier: 'StatusTXT', title: 'Status', criticality: 'Criticality' }
+  StatusText;
+
+  @UI.identification: [ {
+      position: 42 ,
+      label: 'Criticality'
+    } ]
+  @UI.lineItem: [ {
+    position: 42 ,
+    criticality: 'Criticality',
+    label: 'Criticality'
+  } ]
+  @UI.selectionField: [ {
+    position: 42
+  } ]
+  @UI.hidden: true
+  Criticality;
+
+  @EndUserText.label: 'Policy'
+  @UI.identification: [ {
+    position: 50
+  } ]
+  @UI.lineItem: [ {
+    position: 50
+  } ]
+  @UI.selectionField: [ {
+    position: 50
+  } ]
+  @UI.dataPoint: { qualifier: 'PolicyNo', title: 'Policy Number' }
+
+  Policy;
+
+  @EndUserText.label: 'Lossdate'
+  @UI.identification: [ {
+    position: 60
+  } ]
+  @UI.lineItem: [ {
+    position: 60
+  } ]
+  @UI.selectionField: [ {
+    position: 60
+  } ]
+
+  Lossdate;
+
+  @EndUserText.label: 'Opendate'
+  @UI.identification: [ {
+    position: 70
+  } ]
+  @UI.lineItem: [ {
+    position: 70
+  } ]
+  @UI.selectionField: [ {
+    position: 70
+  } ]
+
+  Opendate;
+
+  @EndUserText.label: 'ClaimDesc'
+  @UI.identification: [ {
+    position: 80
+  } ]
+  @UI.lineItem: [ {
+    position: 80
+  } ]
+  @UI.selectionField: [ {
+    position: 80
+  } ]
+
+  ClaimDesc;
+
+  @EndUserText.label: 'Deductable'
+  @UI.identification: [ {
+    position: 81
+  } ]
+  @UI.lineItem: [ {
+    position: 81
+  } ]
+  @UI.selectionField: [ {
+    position: 81
+  } ]
+  deductable;
+
+  @EndUserText.label: 'Day'
+  @UI.identification: [ {
+    position: 82
+  } ]
+  @UI.lineItem: [ {
+    position: 82
+  } ]
+  @UI.selectionField: [ {
+    position: 82
+  } ]
+  dayOfTheClaim;
+
+
+
+  //  @UI.identification: [ {
+  //    position: 90 ,
+  //    label: 'Created By'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 90 ,
+  //    label: 'Created By'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 90
+  //  } ]
+  @UI.fieldGroup: [{ qualifier: 'dates', label: 'Created By',  position: 10 }]
+  CreatedBy;
+
+  //  @UI.identification: [ {
+  //    position: 100 ,
+  //    label: 'Created On'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 100 ,
+  //    label: 'Created On'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 100
+  //  } ]
+  @UI.fieldGroup: [{ qualifier: 'dates', label: 'Created Date',  position: 30 }]
+  CreatedAt;
+
+  //  @UI.identification: [ {
+  //    position: 110 ,
+  //    label: 'Changed By'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 110 ,
+  //    label: 'Changed By'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 110
+  //  } ]
+  //  @UI.hidden: true
+  @UI.fieldGroup: [{ qualifier: 'dates', label: 'Changed By',  position: 20 }]
+  LocalLastChangedBy;
+
+  //  @UI.identification: [ {
+  //    position: 120 ,
+  //    label: 'Changed At'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 120 ,
+  //    label: 'Changed At'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 120
+  //  } ]
+  //  @UI.hidden: true
+  @UI.fieldGroup: [{ qualifier: 'dates', label: 'Changed at',  position: 30 }]
+  LocalLastChangedAt;
+
+  //  @UI.identification: [ {
+  //    position: 130 ,
+  //    label: 'Changed On'
+  //  } ]
+  //  @UI.lineItem: [ {
+  //    position: 130 ,
+  //    label: 'Changed On'
+  //  } ]
+  //  @UI.selectionField: [ {
+  //    position: 130
+  //  } ]
+  //  @UI.hidden: true
+  @UI.fieldGroup: [{ qualifier: 'dates', label: 'Last Changed',  position: 40 }]
+  LastChangedAt;
+}

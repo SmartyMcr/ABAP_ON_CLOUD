@@ -1,0 +1,243 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'Claim',
+    typeNamePlural: 'Claims',
+    title: {
+      type: #STANDARD,
+      label: 'Claim',
+      value: 'Claim'
+    }
+  },
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'Claim',
+      direction: #ASC
+    } ],
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+
+annotate view ZC_MW_CLAIM2 with
+{
+  @UI.facet: [ {
+    id: 'idCollection',
+    type: #COLLECTION,
+    label: 'Claim',
+    position: 10
+  },
+  {
+    id: 'idIdentification',
+    parentId: 'idCollection',
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'General Information',
+    position: 10
+  },
+  {
+    id: 'idLineitem',
+    type: #LINEITEM_REFERENCE,
+    label: 'Subclaim',
+    position: 20 ,
+    targetElement: '_Subclaim2'
+  } ]
+
+  @UI.lineItem: [
+    { position: 10 , importance: #HIGH }
+   ,{ type: #FOR_ACTION, dataAction: 'closeClaim', label: 'Close Claim1' }
+   ,{ type: #FOR_ACTION, dataAction: 'rejectClaim', label: 'Reject Claim2' }
+   ]
+   
+  @UI.identification: [
+    { position: 10 , importance: #HIGH }
+  ]
+  @UI.selectionField: [ {
+    position: 10
+  } ]
+
+  Claim;
+
+  @UI.identification: [ {
+    position: 20 , importance: #HIGH , label: 'Policy Prod' }
+    ,{ type: #FOR_ACTION, dataAction: 'closeClaim', label: 'Close Claim3' }  //added line
+     ,{ type: #FOR_ACTION, dataAction: 'rejectClaim', label: 'Reject Claim4' }  //added line
+     ]
+  @UI.lineItem: [ {
+    position: 20 ,
+    label: 'Policy Prod'
+  } ]
+  @UI.selectionField: [ {
+    position: 20
+  } ]
+  @UI.textArrangement: #TEXT_ONLY
+  Polprod;
+
+  @UI.identification: [ {
+    position: 30,  importance: #HIGH,
+    label: 'Claim Type'
+  } ]
+  @UI.lineItem: [ {
+    position: 30 ,
+    label: 'Claim Type'
+  } ]
+  @UI.selectionField: [ {
+    position: 30
+  } ]
+  @UI.textArrangement: #TEXT_ONLY
+  Clmtype;
+
+  @UI.identification: [ {
+    position: 40,
+    label: 'Status',
+    criticality: 'OverallStatusIndicator'
+  } ]
+  @UI.lineItem: [ {
+    position: 40 , criticality: 'OverallStatusIndicator',
+    label: 'Status'
+  } ]
+  @UI.selectionField: [ {
+    position: 40
+  } ]
+  @UI.textArrangement: #TEXT_ONLY
+  Status;
+
+  @EndUserText.label: 'Policy'
+  @UI.identification: [ {
+    position: 50
+  } ]
+  @UI.lineItem: [ {
+    position: 50
+  } ]
+  @UI.selectionField: [ {
+    position: 50
+  } ]
+  Policy;
+
+  @EndUserText.label: 'Lossdate'
+  @UI.identification: [ {
+    position: 60
+  } ]
+  @UI.lineItem: [ {
+    position: 60
+  } ]
+  @UI.selectionField: [ {
+    position: 60
+  } ]
+  Lossdate;
+
+  @EndUserText.label: 'Opendate'
+  @UI.identification: [ {
+    position: 70
+  } ]
+  @UI.lineItem: [ {
+    position: 70
+  } ]
+  @UI.selectionField: [ {
+    position: 70
+  } ]
+  Opendate;
+
+  @EndUserText.label: 'ClaimDesc'
+  @UI.identification: [ {
+    position: 80
+  } ]
+  @UI.lineItem: [ {
+    position: 80
+  } ]
+  @UI.selectionField: [ {
+    position: 80
+  } ]
+  ClaimDesc;
+
+  @UI.identification: [ {
+    position: 90 ,
+    label: 'Booking Fee'
+  } ]
+  @UI.lineItem: [ {
+    position: 90 ,
+    label: 'Booking Fee'
+  } ]
+  @UI.selectionField: [ {
+    position: 90
+  } ]
+  Bookingfee;
+
+  @UI.identification: [ {
+    position: 100 ,
+    label: 'Total Price'
+  } ]
+  @UI.lineItem: [ {
+    position: 100 ,
+    label: 'Total Price'
+  } ]
+  @UI.selectionField: [ {
+    position: 100
+  } ]
+  Totalprice;
+
+  @UI.identification: [ {
+    position: 110 ,
+    label: 'Created By'
+  } ]
+  @UI.lineItem: [ {
+    position: 110 ,
+    label: 'Created By'
+  } ]
+  @UI.selectionField: [ {
+    position: 110
+  } ]
+  CreatedBy;
+
+  @UI.identification: [ {
+    position: 120 ,
+    label: 'Created On'
+  } ]
+  @UI.lineItem: [ {
+    position: 120 ,
+    label: 'Created On'
+  } ]
+  @UI.selectionField: [ {
+    position: 120
+  } ]
+  CreatedAt;
+
+  @UI.identification: [ {
+    position: 130 ,
+    label: 'Changed By'
+  } ]
+  @UI.lineItem: [ {
+    position: 130 ,
+    label: 'Changed By'
+  } ]
+  @UI.selectionField: [ {
+    position: 130
+  } ]
+  LocalLastChangedBy;
+
+  @UI.identification: [ {
+    position: 140 ,
+    label: 'Last Changed At'
+  } ]
+  @UI.lineItem: [ {
+    position: 140 ,
+    label: 'Last Changed At'
+  } ]
+  @UI.selectionField: [ {
+    position: 140
+  } ]
+  LocalLastChangedAt;
+
+  @UI.identification: [ {
+    position: 150 ,
+    label: 'Last Changed On'
+  } ]
+  @UI.lineItem: [ {
+    position: 150 ,
+    label: 'Last Changed On'
+  } ]
+  @UI.selectionField: [ {
+    position: 150
+  } ]
+  LastChangedAt;
+}

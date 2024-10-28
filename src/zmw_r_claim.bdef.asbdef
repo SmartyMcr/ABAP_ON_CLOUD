@@ -1,0 +1,180 @@
+managed implementation in class ZMW_BP_R_CLAIM unique;
+strict ( 2 );
+
+with draft;
+
+define behavior for ZMW_R_CLAIM alias Claim
+
+persistent table zmw_claim
+lock master
+total etag LocalLastChangedAt
+etag master LocalLastChangedAt
+
+//lock master total etag LastChangedAt
+authorization master ( global ) // Should be Instance?
+// calls method get_global_authorizations (or get_instance_authorizations)
+draft table zmw_claim_d
+early numbering
+with additional save
+{
+
+  field ( readonly )
+  Claim,
+  TotalPrice,
+  CreatedBy,
+  CreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedAt;
+
+  field ( mandatory ) Clmtype, Policy, Polprod;
+
+  // Precheck is to valiadte the draft entry
+  create ( precheck );
+  update ( precheck );
+  delete;
+
+  internal action reCalcTotalPrice;
+
+  action  closeClaim result[1] $self;
+  action  rejectClaim result[1] $self;
+
+  determination calculateTotalPrice on modify { create; field BookingFee, CurrencyCode; }
+
+  validation validateHeaderData on save { create; field Polprod, Lossdate, Opendate; }
+
+  side effects { field BookingFee affects field TotalPrice; }
+
+  // Actions
+  factory action copyClaim [1];
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zmw_claim
+    {
+      Claim              = claim;
+      Polprod            = polprod;
+      Clmtype            = clmtype;
+      Status             = status;
+      Policy             = policy;
+      Lossdate           = lossdate;
+      Opendate           = opendate;
+      ClaimDesc          = claim_desc;
+      BookingFee         = bookingfee;
+      TotalPrice         = totalprice;
+      CurrencyCode       = currencycode;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+
+  association _Subclaim { create ( features : instance ); with draft; }
+
+}
+
+// //
+define behavior for ZMW_I_Subclaim alias Subclaim
+implementation in class ZMW_BP_SUBCLAIM unique
+persistent table zmw_subclaim
+draft table zmw_subclaim_d
+//draft table ZMW_CLAIM_D
+etag master LocalLastChangedAt
+lock dependent by _Claim
+//lock master total etag LastChangedAt
+authorization dependent by _Claim
+early numbering
+{
+
+  field ( readonly ) Claim, Subclaim;
+
+  field ( readonly )
+  //  TotalPaid,
+  CreatedBy,
+  CreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedAt;
+
+  update;
+  delete;
+
+  determination calculateTotalPrice on modify { field TotalPaid, CurrencyCode; }
+
+  association _Claim { with draft; }
+  association _Pay { create; with draft; }
+  //  mapping for ZMW_SUBCLAIM corresponding;
+  mapping for zmw_subclaim
+    {
+      Claim              = claim;
+      Subclaim           = subclaim;
+      Subcltype          = subcltype;
+      Status             = status;
+      Coverage           = coverage;
+      TotalPaid          = tot_paid;
+      CurrencyCode       = currency_code;
+      Opendate           = opendate;
+      Complexity         = complexity;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+
+
+}
+
+// // //
+define behavior for ZMW_I_Pay alias Pay
+implementation in class ZMW_BP_PAY unique
+persistent table zmw_pay
+//with unmanaged save
+draft table zmw_pay_d
+etag master LocalLastChangedAt
+//lock dependent by _Claim
+lock dependent by _Claim
+//lock master total etag LastChangedAt
+authorization dependent by _Claim
+early numbering
+{
+  update;
+  delete;
+
+  field ( readonly ) Subclaim, Claim, Payment;
+
+  field ( readonly )
+  CreatedBy,
+  CreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedAt;
+
+  association _Claim { with draft; }
+  association _Subclaim { with draft; }
+
+  //  determination calculateTotalPrice on modify { create; field Pampaid, CurrencyCode; }
+
+  //  mapping for ZMW_SUBCLAIM corresponding;
+  mapping for zmw_pay
+    {
+      Claim              = claim;
+      Subclaim           = subclaim;
+      Payment            = payment;
+      Pampaid            = pampaid;
+      CurrencyCode       = currency_code;
+      Bentype            = bentype;
+      PayStat            = pay_stat;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+
+
+}

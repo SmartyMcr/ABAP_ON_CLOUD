@@ -1,0 +1,53 @@
+projection ;
+//implementation in class ZBP_C_MW_CLAIM2 unique;
+strict ( 2 );
+use draft;
+use side effects;
+define behavior for ZC_MW_CLAIM2 alias Claim2
+use etag
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action closeClaim;
+  use action rejectClaim;
+  use action createClaim;
+  use action checkDates;
+  use association _Subclaim2 { create; with draft;}
+}
+
+define behavior for ZMW_C_SUBCLAIM2 alias Subclaim2
+use etag
+
+{
+  use update;
+  use delete;
+
+//side effects { field BookingDate affects field DaysToFlightIndicator, field InitialDaysToFlight, field RemainingDaysToFlight;
+//               field FlightDate affects field DaysToFlightIndicator, field InitialDaysToFlight, field RemainingDaysToFlight;
+//               field ConnectionID affects field DaysToFlightIndicator, field InitialDaysToFlight, field RemainingDaysToFlight;
+//               field CarrierID affects field DaysToFlightIndicator, field InitialDaysToFlight, field RemainingDaysToFlight; }
+
+  use association _Claim2 { with draft; }
+//  use association _Pay { create; with draft; }
+
+}
+
+//define behavior for ZMW_C_PAY alias Pay
+////use etag
+//{
+//
+//  use update;
+//  use delete;
+//
+////  use delete; // workaround for missing determination on delete
+//  use association _Claim  { with draft; }
+//  use association _Subclaim  { with draft; }
+//}
